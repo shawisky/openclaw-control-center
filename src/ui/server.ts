@@ -7944,6 +7944,7 @@ async function renderHtml(
 <html>
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=no" />
   <title>OpenClaw Control Center</title>
   <script>
     (() => {
@@ -11326,12 +11327,267 @@ async function renderHtml(
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* ===== 移动端优化 ===== */
+    .menu-toggle {
+      display: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .menu-toggle:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    html[data-theme="dark"] .menu-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 480px) {
+      /* 汉堡菜单显示 */
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 侧边栏改为顶部抽屉 */
+      .sidebar:first-of-type {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        transform: translateY(-100%);
+        transition: transform 0.25s ease;
+        max-height: 85vh;
+        border-radius: 0 0 20px 20px;
+        padding: 12px;
+      }
+
+      .sidebar:first-of-type.open {
+        transform: translateY(0);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      }
+
+      /* 品牌栏调整 */
+      .brand {
+        padding: 12px;
+        padding-right: 44px;
+      }
+
+      .brand h1 {
+        font-size: 18px;
+        text-align: center;
+        margin: 8px 0;
+      }
+
+      .brand-actions {
+        margin-right: 36px;
+      }
+
+      /* 主面板留空 */
+      .panel {
+        margin-top: 60px;
+      }
+
+      /* 导航变为横向滚动 */
+      .nav-links {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 8px;
+        padding-bottom: 8px;
+      }
+
+      .nav-link {
+        flex-shrink: 0;
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+
+      .nav-link span {
+        font-size: 14px;
+      }
+
+      /* 卡片和 KPI */
+      .card {
+        padding: 12px;
+        border-radius: 12px;
+      }
+
+      .overview-kpi-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+      }
+
+      .overview-kpi-value {
+        font-size: 24px;
+      }
+
+      .overview-kpi-label {
+        font-size: 12px;
+      }
+
+      /* 按钮触摸优化 */
+      button,
+      .btn,
+      a.btn,
+      .icon-btn {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 16px;
+        font-size: 15px;
+        touch-action: manipulation;
+      }
+
+      .icon-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* 状态芯片 */
+      .badge,
+      .status-chip {
+        min-height: 32px;
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+
+      /* 表格横向滚动 */
+      table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .task-table,
+      .session-table,
+      .global-visibility-card .ops-board {
+        min-width: 600px;
+      }
+
+      /* 标题大小 */
+      .section-title {
+        font-size: 20px;
+      }
+
+      h1 { font-size: 20px; }
+      h2 { font-size: 18px; }
+      h3 { font-size: 16px; }
+
+      p, li, div {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      /* 隐藏次要信息 */
+      .section-blurb {
+        display: none;
+      }
+
+      .meta {
+        font-size: 12px;
+      }
+
+      /* 协作大厅 */
+      .collaboration-summary-grid,
+      .task-hub-board-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .collaboration-avatar {
+        width: 48px;
+        max-width: 48px;
+      }
+
+      /* 头像网格 */
+      .avatar-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px;
+      }
+
+      /* 底部操作栏 */
+      .section-head-actions {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .section-head-actions .btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 10px 14px;
+      }
+
+      /* 文件编辑器 */
+      .file-editor-textarea {
+        min-height: 200px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .app-shell {
+        padding: 8px !important;
+      }
+
+      .card {
+        padding: 10px;
+      }
+
+      .overview-kpi-value {
+        font-size: 22px;
+      }
+
+      button,
+      .btn,
+      a.btn {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+
+      .avatar-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    /* 触摸设备优化 */
+    @media (hover: none) and (pointer: coarse) {
+      .card:hover,
+      .btn:hover,
+      .nav-link:hover {
+        transform: none;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .card:active,
+      .btn:active,
+      .nav-link:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+      }
+
+      * {
+        transition-duration: 0.1s !important;
+      }
+    }
+
   </style>
 </head>
 <body class="ui-preload${collaborationImmersive ? " section-collaboration" : ""}${activeSection === "hall-chat" ? " section-hall-chat" : ""}" data-ui-polish="apple-native-v3" data-apple-window-controls="true" data-ui-language="${escapeHtml(options.language)}" data-token-required="${LOCAL_TOKEN_AUTH_REQUIRED ? "1" : "0"}" data-token-configured="${LOCAL_API_TOKEN ? "1" : "0"}" data-local-token-header="${escapeHtml(LOCAL_TOKEN_HEADER)}" style="--fold-open-label:${options.language === "en" ? "'Expand'" : "'展开'"}; --fold-close-label:${options.language === "en" ? "'Collapse'" : "'收起'"};">
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand">
+        <button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" width="24" height="24">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
         <div class="brand-bar">
           <div class="brand-kicker">OpenClaw</div>
           <div class="brand-actions">
@@ -11416,6 +11672,37 @@ async function renderHtml(
   ${quotaResetScript}
   ${headerControlsScript}
   ${avatarEditorScript}
+  <script>
+    // Mobile Menu Toggle
+    (() => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const sidebar = document.querySelector('.sidebar:first-of-type');
+      
+      if (!menuToggle || !sidebar) return;
+      
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        menuToggle.setAttribute('aria-expanded', sidebar.classList.contains('open'));
+      });
+      
+      // 点击外部关闭菜单
+      document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+          sidebar.classList.remove('open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      
+      // ESC 键关闭菜单
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.focus();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>`;
 }
