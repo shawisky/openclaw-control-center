@@ -23,6 +23,7 @@ Language: **English** | [中文](README.zh-CN.md)
 - `Collaboration`: a hall-first multi-agent work chat with live discussion, execution order, handoff, review, and evidence threads
 - `Tasks`: current work, approvals, execution chains, and runtime evidence
 - `Documents` and `Memory`: source-backed workbenches scoped to active OpenClaw agents
+- **Mobile support**: responsive design for smartphones and tablets with hamburger menu navigation
 
 ## What this release adds
 - `Collaboration`: a new hall-first collaboration page so you can post work in one shared timeline, see real agent roster names reply live, and watch discussion collapse into one execution owner before review.
@@ -45,6 +46,8 @@ Language: **English** | [中文](README.zh-CN.md)
 ## Screenshots
 Example UI from a local OpenClaw environment:
 
+### Desktop View
+
 <table>
   <tr>
     <td width="56%">
@@ -59,6 +62,17 @@ Example UI from a local OpenClaw environment:
     <td><strong>Staff page</strong><br />See who is working now, who is on standby, recent output, and schedule state.</td>
   </tr>
 </table>
+
+### Mobile View (Responsive Design)
+
+The Control Center now supports mobile devices with a responsive layout:
+
+- **Hamburger menu**: Tap to open/close sidebar navigation on screens ≤480px
+- **Optimized layout**: Content adapts to portrait orientation
+- **Touch-friendly**: Buttons meet WCAG 44px minimum touch target size
+- **Smooth transitions**: Slide-in drawer with ESC key and outside-click support
+
+See `MOBILE-DEMO.md` for detailed mobile adaptation documentation.
 
 <table>
   <tr>
